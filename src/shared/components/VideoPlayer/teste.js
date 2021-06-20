@@ -14,22 +14,22 @@ function setState(object, stateKey) {
       newValue[key] = false;
     }
   }
-  addNewValue(object, "state", newValue);
+  addNewValue(object, 'state', newValue);
 }
 
 function setUrl(object, value) {
-  addNewValue(object, "url", value);
+  addNewValue(object, 'url', value);
 }
 
 function setChunks(object, value) {
-  addNewValue(object, "chunks", value);
+  addNewValue(object, 'chunks', value);
 }
 
 /**
  * @returns {MediaRecorder}
  */
 function getMediaRecorder(object) {
-  return Object.getOwnPropertyDescriptor(object, "mediaRecorder").value;
+  return Object.getOwnPropertyDescriptor(object, 'mediaRecorder').value;
 }
 
 class VideoRecorder {
@@ -97,17 +97,23 @@ class VideoRecorder {
    */
   onStop;
 
-  constructor({ mimeType = "video/webm; codecs=vp9", blobType = "video/webm" } = {}) {
+  constructor({
+    mimeType = 'video/webm; codecs=vp9',
+    blobType = 'video/webm',
+  } = {}) {
     navigator.mediaDevices
       .getUserMedia({
-        video: { width: { min: 640, max: 1920 }, height: { min: 480, max: 1080 } },
+        video: {
+          width: { min: 640, max: 1920 },
+          height: { min: 480, max: 1080 },
+        },
         // audio: true,
       })
       .then((thisStream) => {
         this.mediaRecorder = new MediaRecorder(thisStream, { mimeType });
 
         this.mediaRecorder.ondataavailable = (event) => {
-          if (typeof this.onNewDataAvailable === "function") {
+          if (typeof this.onNewDataAvailable === 'function') {
             this.onNewDataAvailable(event);
           }
 
@@ -119,7 +125,7 @@ class VideoRecorder {
 
           const recorder = getMediaRecorder(this);
 
-          if (recorder.state === "inactive") {
+          if (recorder.state === 'inactive') {
             const blob = new Blob(this.chunks, {
               type: blobType,
             });
@@ -160,10 +166,10 @@ class VideoRecorder {
           },
           onError: {
             set: (event) => {
-              if (typeof event === "function") {
+              if (typeof event === 'function') {
                 this.mediaRecorder.onerror = event;
               } else {
-                throw new Error("onError property must to be a function");
+                throw new Error('onError property must to be a function');
               }
             },
             get: () => {
@@ -173,10 +179,10 @@ class VideoRecorder {
           },
           onPause: {
             set: (event) => {
-              if (typeof event === "function") {
+              if (typeof event === 'function') {
                 this.mediaRecorder.onpause = event;
               } else {
-                throw new Error("onPause property must to be a function");
+                throw new Error('onPause property must to be a function');
               }
             },
             get: () => {
@@ -186,10 +192,10 @@ class VideoRecorder {
           },
           onResume: {
             set: (event) => {
-              if (typeof event === "function") {
+              if (typeof event === 'function') {
                 this.mediaRecorder.onresume = event;
               } else {
-                throw new Error("onResume property must to be a function");
+                throw new Error('onResume property must to be a function');
               }
             },
             get: () => {
@@ -199,10 +205,10 @@ class VideoRecorder {
           },
           onStart: {
             set: (event) => {
-              if (typeof event === "function") {
+              if (typeof event === 'function') {
                 this.mediaRecorder.onstart = event;
               } else {
-                throw new Error("onStart property must to be a function");
+                throw new Error('onStart property must to be a function');
               }
             },
             get: () => {
@@ -212,10 +218,10 @@ class VideoRecorder {
           },
           onStop: {
             set: (event) => {
-              if (typeof event === "function") {
+              if (typeof event === 'function') {
                 this.mediaRecorder.onstop = event;
               } else {
-                throw new Error("onStop property must to be a function");
+                throw new Error('onStop property must to be a function');
               }
             },
             get: () => {
@@ -238,7 +244,7 @@ class VideoRecorder {
     if (!this.state?.inactive) {
       const recorder = getMediaRecorder(this);
       recorder.stop();
-      setState(this, "inactive");
+      setState(this, 'inactive');
     }
   }
 
@@ -251,7 +257,7 @@ class VideoRecorder {
       window.URL.revokeObjectURL(this.url);
       setUrl(this, undefined);
       // this.url = undefined;
-      setState(this, "recording");
+      setState(this, 'recording');
     }
   }
 
@@ -259,7 +265,7 @@ class VideoRecorder {
     if (this.state?.inactive) {
       const recorder = getMediaRecorder(this);
       recorder.pause();
-      setState(this, "paused");
+      setState(this, 'paused');
     }
   }
 
@@ -267,7 +273,7 @@ class VideoRecorder {
     if (this.state?.inactive) {
       const recorder = getMediaRecorder(this);
       recorder.resume();
-      setState(this, "recording");
+      setState(this, 'recording');
     }
   }
 
@@ -285,12 +291,12 @@ class VideoRecorder {
   }
 
   downloadRecord(name) {
-    const a = document.createElement("a");
+    const a = document.createElement('a');
 
     let thisName = name;
 
     if (!thisName) {
-      thisName = "webcamrecord.webm";
+      thisName = 'webcamrecord.webm';
       // const now = new Date();
 
       // const d = now.getDate();

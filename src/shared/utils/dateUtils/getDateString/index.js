@@ -2,12 +2,12 @@
  * @param {Date} dateProp
  */
 function getDateString(dateProp) {
-  const date = typeof dateProp === "string" ? new Date(dateProp) : dateProp;
+  const date = typeof dateProp === 'string' ? new Date(dateProp) : dateProp;
 
   if (date instanceof Date) {
-    function handleNumb(e) {
+    const handleNumb = (e) => {
       return e > 9 ? e : `0${e}`;
-    }
+    };
 
     const day = handleNumb(date.getUTCDate());
     const month = handleNumb(date.getUTCMonth() + 1);

@@ -1,14 +1,18 @@
 /* eslint-disable eqeqeq */
-import React from "react";
+import React from 'react';
 
-import { Container } from "./styles";
+import { Container } from './styles';
 
 function VideoPlayer({ style, ...rest }) {
   /**
    * @type {[MediaRecorder, React.Dispatch<React.SetStateAction<MediaRecorder>>]}
    */
   const [recorder, setRecorder] = React.useState();
-  const [{ recording, inactive, paused }, setStatus] = React.useState({ recording: false, inactive: true, paused: false });
+  const [{ recording, inactive, paused }, setStatus] = React.useState({
+    recording: false,
+    inactive: true,
+    paused: false,
+  });
   const [chunks, setChunks] = React.useState([]);
   const [isDownloadable, setIsDownloadable] = React.useState(false);
 
@@ -42,13 +46,13 @@ function VideoPlayer({ style, ...rest }) {
   function download() {
     const blob = new Blob(chunks, {
       // type: "video/webm",
-      type: "video/mp4",
+      type: 'video/mp4',
     });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
 
     a.href = url;
-    a.download = "test.webm";
+    a.download = 'test.webm';
     a.click();
 
     a.remove();
@@ -58,13 +62,18 @@ function VideoPlayer({ style, ...rest }) {
   React.useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
-        video: { width: { min: 640, max: 1920 }, height: { min: 480, max: 1080 } },
+        video: {
+          width: { min: 640, max: 1920 },
+          height: { min: 480, max: 1080 },
+        },
         // audio: true,
       })
       .then((thisStream) => {
         const videoElement = ref.current;
 
-        const thisRecorder = new MediaRecorder(thisStream, { mimeType: "video/webm; codecs=vp9" });
+        const thisRecorder = new MediaRecorder(thisStream, {
+          mimeType: 'video/webm; codecs=vp9',
+        });
         thisRecorder.ondataavailable = (event) => {
           const thisBlob = event?.data;
           let haveChunk = thisBlob.size > 0;
@@ -76,7 +85,7 @@ function VideoPlayer({ style, ...rest }) {
               return [...prev, thisBlob];
             }
           });
-          if (haveChunk && thisRecorder.state === "inactive") {
+          if (haveChunk && thisRecorder.state === 'inactive') {
             setIsDownloadable(true);
           }
         };
@@ -96,8 +105,22 @@ function VideoPlayer({ style, ...rest }) {
 
   return (
     <Container>
-      <video controls ref={ref} style={{ width: 500, height: 350, background: "#333", margin: "auto", display: "block", ...style }} {...rest} />
-      <button onClick={toggleRecording}>{recording ? "Pause" : "Record"}</button>
+      <video
+        controls
+        ref={ref}
+        style={{
+          width: 500,
+          height: 350,
+          background: '#333',
+          margin: 'auto',
+          display: 'block',
+          ...style,
+        }}
+        {...rest}
+      />
+      <button onClick={toggleRecording}>
+        {recording ? 'Pause' : 'Record'}
+      </button>
       {!inactive && <button onClick={stopRecording}>stop</button>}
       <br />
       {isDownloadable && <button onClick={download}>baixar</button>}

@@ -1,16 +1,16 @@
-import React from "react";
-import { Route as ReactRoute } from "react-router-dom";
+import React from 'react';
+import { Route as ReactRoute } from 'react-router-dom';
 
-function Route({ component: Componente, Layout, privado, footer, ...resto }) {
+function Route({ component: Componente, Layout, footer, ...props }) {
   // const { store } = React.useContext(authContext);
 
-  // if (!logado && privado) {
+  // if (!logado && private) {
   //   return <Redirect to="/" />;
   // }
 
   return (
     <ReactRoute
-      {...resto}
+      {...props}
       render={(props) =>
         Layout ? (
           <Layout footer={footer}>

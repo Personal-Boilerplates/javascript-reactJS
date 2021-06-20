@@ -1,4 +1,5 @@
-import splitStringPath from "../splitStringPath";
+import isObject from '../isObject';
+import splitStringPath from '../splitStringPath';
 
 /**
  * @param {string} name
@@ -11,22 +12,18 @@ export default function findValueByName(name, object) {
   let result = {
     parent: null,
     key: null,
-    value: null
+    value: null,
   };
 
   if (name && object) {
-    function isObj(data) {
-      return Object.prototype.toString.call(data) === "[object Object]";
-    }
-
     let path = splitStringPath(name);
 
-    function findValue([key, ...rest], thisObject) {
+    const findValue = ([key, ...rest], thisObject) => {
       const { isArray, key: thisKey } = key || {};
 
       if (isArray && !Array.isArray(thisObject)) {
         return undefined;
-      } else if (!isArray && !isObj(thisObject)) {
+      } else if (!isArray && !isObject(thisObject)) {
         return undefined;
       } else if (rest.length > 0) {
         return findValue(rest, thisObject[thisKey]);
@@ -34,13 +31,13 @@ export default function findValueByName(name, object) {
         result = {
           parent: thisObject,
           key,
-          value: thisObject?.[thisKey]
-        }
+          value: thisObject?.[thisKey],
+        };
       }
-    }
+    };
 
     findValue(path, object);
   }
-  
+
   return result;
 }

@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import getRandomIndex from "~/shared/utils/arrayUtils/getRandomIndex";
-import { findObjectValue } from "~/shared/utils/objectUtils";
-import getAudioDuration from "./getAudioDuration";
+import { useState, useEffect, useCallback } from 'react';
+import getRandomIndex from '~/shared/utils/arrayUtils/getRandomIndex';
+import { findObjectValue } from '~/shared/utils/objectUtils';
+import getAudioDuration from './getAudioDuration';
 
 function getTimeString(thisDuration) {
   const hour = Math.floor(thisDuration / 60 / 60);
@@ -72,10 +72,10 @@ function useAudioPlayer(options) {
       });
     };
 
-    audio.addEventListener("ended", setEndedAudio);
+    audio.addEventListener('ended', setEndedAudio);
 
     return () => {
-      audio.removeEventListener("ended", setEndedAudio);
+      audio.removeEventListener('ended', setEndedAudio);
     };
   }, [audio, playNext, repeat, shuffle, srcArray, srcObject, uniqueKeyPath]);
 
@@ -85,30 +85,30 @@ function useAudioPlayer(options) {
       const result = [];
       thisArray.forEach((thisSrc, i) => {
         function addDurations(src, obj) {
-          if (!obj.durationString || typeof durationStringName === "string") {
-            obj[durationStringName || "durationString"] = "00:00";
+          if (!obj.durationString || typeof durationStringName === 'string') {
+            obj[durationStringName || 'durationString'] = '00:00';
             getAudioDuration(src).then((r) => {
-              obj[durationStringName || "durationString"] = getTimeString(r);
+              obj[durationStringName || 'durationString'] = getTimeString(r);
             });
           }
-          if (!obj.duration || typeof durationName === "string") {
-            obj[durationName || "duration"] = undefined;
+          if (!obj.duration || typeof durationName === 'string') {
+            obj[durationName || 'duration'] = undefined;
             getAudioDuration(src).then((r) => {
-              obj[durationName || "duration"] = r;
+              obj[durationName || 'duration'] = r;
             });
           }
         }
 
         if (srcPath) {
           const thisVal = findObjectValue(srcPath, thisSrc);
-          if (typeof thisVal === "string") {
+          if (typeof thisVal === 'string') {
             result.push(thisSrc);
             addDurations(thisVal, thisSrc);
           }
         } else {
-          if (typeof thisSrc === "string") {
+          if (typeof thisSrc === 'string') {
             const thisData = {
-              [uniqueKeyPath || "id"]: i,
+              [uniqueKeyPath || 'id']: i,
               src: thisSrc,
             };
 
@@ -182,13 +182,13 @@ function useAudioPlayer(options) {
       }
     };
 
-    audio.addEventListener("loadeddata", setAudioData);
+    audio.addEventListener('loadeddata', setAudioData);
 
-    audio.addEventListener("timeupdate", setAudioTime);
+    audio.addEventListener('timeupdate', setAudioTime);
 
     return () => {
-      audio.removeEventListener("loadeddata", setAudioData);
-      audio.removeEventListener("timeupdate", setAudioTime);
+      audio.removeEventListener('loadeddata', setAudioData);
+      audio.removeEventListener('timeupdate', setAudioTime);
     };
   }, [audio]);
 
@@ -208,7 +208,7 @@ function useAudioPlayer(options) {
     buffer,
     setCurrentTime: (numb) => {
       const thisVal = Number(numb);
-      if (isNaN(thisVal) || numb === "" || typeof numb === "boolean") {
+      if (isNaN(thisVal) || numb === '' || typeof numb === 'boolean') {
         audio.currentTime = 0;
       } else if (thisVal > duration) {
         audio.currentTime = duration;

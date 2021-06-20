@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { Container } from "./styles";
-import Menu from "./Menu";
+import { Container } from './styles';
+import Menu from './Menu';
 
-function BasicLayout({ children, ...rest }) {
+function BasicLayout({ children, ...props }) {
   return (
-    <Container>
+    <Container {...props}>
       <Menu />
       <main>{children}</main>
     </Container>

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 /**
  * @param {('1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'10'|'11'|'12')} size
@@ -66,15 +66,15 @@ export default createGlobalStyle`
     box-sizing: border-box;
 
     @media (max-width: 640px) {
-      ${colWidthOffset("s")}
+      ${colWidthOffset('s')}
     }
 
     @media (min-width: 641px) and (max-width: 1024px) {
-      ${colWidthOffset("m")}
+      ${colWidthOffset('m')}
     }
 
     @media (min-width: 1025px) {
-      ${colWidthOffset("l")}
+      ${colWidthOffset('l')}
     }
   }
 

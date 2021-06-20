@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import isObject from "../isObject";
+import isObject from '../isObject';
 
 /**
  * @typedef {Object} optionsType
@@ -11,11 +11,13 @@ import isObject from "../isObject";
  */
 
 /**
- * @param {any} data 
+ * @param {any} data
  * @param {optionsType} options
  */
 function convertData(data, options) {
-  const isNotIncludes = ['equal', 'exactly'].some(e => e === options.compareMethod);
+  const isNotIncludes = ['equal', 'exactly'].some(
+    (e) => e === options.compareMethod
+  );
   const {
     caseSensitive = isNotIncludes,
     allowSymbols = isNotIncludes,
@@ -25,12 +27,12 @@ function convertData(data, options) {
   let d = String(data);
   if (!allowSymbols) {
     if (!allowSpaces) {
-      d = d.replace(/[^a-zA-Z0-9 ]/g, "");
+      d = d.replace(/[^a-zA-Z0-9 ]/g, '');
     } else {
-      d = d.replace(/[^a-zA-Z0-9]/g, "");
+      d = d.replace(/[^a-zA-Z0-9]/g, '');
     }
   } else if (!allowSpaces) {
-    d = d.replace(/[^ ]/g, "");
+    d = d.replace(/[^ ]/g, '');
   }
   if (!caseSensitive) {
     d = d.toLowerCase();
@@ -39,8 +41,8 @@ function convertData(data, options) {
 }
 
 /**
- * @param {any} thisData 
- * @param {any} thisFilter 
+ * @param {any} thisData
+ * @param {any} thisFilter
  * @param {optionsType} options
  */
 function everyKey(thisData, thisFilter, options) {
@@ -73,7 +75,7 @@ function everyKey(thisData, thisFilter, options) {
         return thisIndex >= 0;
       });
     }
-  } else if (typeof thisFilter === "function") {
+  } else if (typeof thisFilter === 'function') {
     return thisFilter(thisData);
   } else if (thisFilter) {
     const convertedData = convertData(thisData);

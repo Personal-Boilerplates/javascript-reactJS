@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 /**
  * @typedef {Object} storeType
@@ -9,15 +9,15 @@ import { createContext } from "react";
  * @type {storeType}
  */
 export const authContextStoreDefaultValue = {
-  userData: undefined
-}
+  userData: undefined,
+};
 
 const authContext = createContext({
   store: authContextStoreDefaultValue,
   /**
-   * @param {storeType | (prev: storeType) => storeType} data 
+   * @param {storeType | (prev: storeType) => storeType} _data
    */
-  dispatch: (data) => {},
+  dispatch: (data) => data,
 });
 
 export const { Consumer, Provider, displayName } = authContext;
