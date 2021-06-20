@@ -1,0 +1,16 @@
+import React from 'react';
+import './types';
+import registerRoute from '~/App/routes/registerRoute';
+import * as S from './styles';
+
+/**
+ * @param { {{pascalCase name}}PropsType } props
+ */
+function {{pascalCase name}}(props) {
+  return <S.Container {...props}>{{pascalCase name}}</S.Container>;
+}
+
+export default registerRoute({
+  component: {{pascalCase name}},
+  path: '/{{lowerCase name}}',
+});

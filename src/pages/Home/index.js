@@ -5,7 +5,8 @@ import BasicLayout from '~/shared/Layouts/BasicLayout';
 
 import * as S from './styles';
 
-function Home() {
+function Home(props) {
+  console.log(props);
   return (
     <S.Container>
       <h1>Home</h1>

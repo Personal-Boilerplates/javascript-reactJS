@@ -1,0 +1,16 @@
+import React from 'react';
+import './types';
+import * as S from './styles';
+
+/**
+ * @param { {{pascalCase name}}PropsType } props
+ */
+function {{pascalCase name}}({ children, innerRef, ...rest }) {
+  return (
+    <S.Container {...rest} ref={innerRef}>
+      {children}
+    </S.Container>
+  );
+}
+
+export default {{pascalCase name}};
